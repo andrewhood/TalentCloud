@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Lang;
 
 /*
@@ -22,6 +23,17 @@ Route::group(
         /** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
 
         Route::group(['prefix' => 'demo'], function () : void {
+
+            Route::get('users/{userId}/delete', function ($userId) {
+                $user = User::find($userId);
+                $response = "Deleted user $user->id ok!";
+                $user->delete();
+                return $response;
+            })->middleware('localOnly');
+            Route::get('users/{userId}/view', function ($userId) {
+                $user = User::find($userId);
+                return $user->getAttributes();
+            })->middleware('localOnly');
 
             /* Temporary Blog Index */
             Route::view('blog', 'common/blog-index')->middleware('localOnly')->name('blog');

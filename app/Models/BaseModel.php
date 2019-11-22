@@ -8,9 +8,32 @@ use Carbon\Carbon;
 use DateTimeInterface;
 use Jenssegers\Date\Date;
 use DateTime;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
-abstract class BaseModel extends Eloquent {
-    //Override date functions to return Jenssegers Data instead of Carbon
+abstract class BaseModel extends Eloquent
+{
+    public static function boot()
+    {
+        static::creating(function ($model) {
+            Log::debug('creating model ' . $model);
+            Gate::authorize('create', $model);
+        });
+
+        static::updating(function ($model) {
+            Log::debug('updating model ' . $model);
+            Gate::authorize('update', $model);
+        });
+
+        static::deleting(function ($model) {
+            Log::debug('deleting model ' . $model);
+            Gate::authorize('delete', $model);
+        });
+
+        parent::boot();
+    }
+
+    // Override date functions to return Jenssegers Data instead of Carbon
 
     /**
      * Get a fresh timestamp for the model.
@@ -46,8 +69,9 @@ abstract class BaseModel extends Eloquent {
         // when checking the field. We will just return the DateTime right away.
         if ($value instanceof DateTimeInterface) {
             return new Date(
-                //$value->format('Y-m-d H:i:s.u'), $value->getTimeZone()
-                $value->format('Y-m-d H:i:s.u'), $timezone
+                // $value->format('Y-m-d H:i:s.u'), $value->getTimeZone()
+                $value->format('Y-m-d H:i:s.u'),
+                $timezone
             );
         }
         // If this value is an integer, we will assume it is a UNIX timestamp's value
