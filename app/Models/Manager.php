@@ -237,16 +237,4 @@ class Manager extends BaseModel
         }
         return true;
     }
-
-    /**
-     * Return the array of values used to represent this object in an api response.
-     * This array should contain no nested objects (besides translations).
-     *
-     * @return mixed[]
-     */
-    public function toApiArray()
-    {
-        $withTranslations = array_merge($this->toArray(), $this->getTranslations());
-        return $withTranslations;
-    }
 }
