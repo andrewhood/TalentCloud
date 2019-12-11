@@ -436,23 +436,21 @@ Route::group(
         'middleware' => ['auth', 'role:admin']
     ],
     function (): void {
-        // This page is non-localized, because the middleware that redirects to localized pages changes POSTs to GETs and messes up the request.
+        // This page is non-localized, because the middleware that redirects to localized
+        // pages changes POSTs to GETs and messes up the request.
         Route::post('jobs/create/as-manager/{manager}', 'JobController@createAsManager')
             ->middleware('can:create,App\Models\JobPoster')
             ->name('admin.jobs.create_as_manager');
     }
 );
 
+/* ALL NON-LOCALIZED ROUTES **/
 
-/** ALL NON-LOCALIZED ROUTES **/
-
-
-
-/** API routes - currently using same default http auth, but not localized */
+/* API routes - currently using same default http auth, but not localized */
 Route::group(['prefix' => 'api'], function (): void {
-    // Protected by a gate in the controller, instead of policy middleware
+    // Protected by a gate in the controller, instead of policy middleware.
     Route::get('jobs/{jobPoster}/assessment-plan', 'AssessmentPlanController@getForJob');
-    // Public, not protected by policy or gate
+    // Public, not protected by policy or gate.
     Route::get('skills', 'Api\SkillController@index');
     Route::get('departments', 'Api\DepartmentController@index');
 
@@ -471,7 +469,7 @@ Route::group(['prefix' => 'api'], function (): void {
     Route::resource('assessment-plan-notifications', 'AssessmentPlanNotificationController')->except([
         'store', 'create', 'edit'
     ]);
-    // TODO: add policy middleware
+    // TODO: add policy middleware.
     Route::get('jobs/{jobPoster}/tasks', 'Api\JobPosterKeyTaskController@indexByJob')
         ->where('jobPoster', '[0-9]+')
         ->middleware('can:view,jobPoster');
@@ -479,14 +477,12 @@ Route::group(['prefix' => 'api'], function (): void {
         ->where('jobPoster', '[0-9]+')
         ->middleware('can:update,jobPoster');
 
-
      Route::get('jobs/{jobPoster}/criteria', 'Api\CriteriaController@indexByJob')
         ->where('jobPoster', '[0-9]+')
         ->middleware('can:view,jobPoster');
     Route::put('jobs/{jobPoster}/criteria', 'Api\CriteriaController@batchUpdate')
         ->where('jobPoster', '[0-9]+')
         ->middleware('can:update,jobPoster');
-
 
     Route::post('jobs/{job}/submit', 'Api\JobApiController@submitForReview')
         ->where('job', '[0-9]+')
@@ -500,14 +496,14 @@ Route::group(['prefix' => 'api'], function (): void {
         'update' => 'api.jobs.update'
     ]);
 
-    Route::resource('managers', 'Api\ManagerApiController')->only([
+    Route::resource('managers', 'Api\ManagerController')->only([
         'show', 'update'
-    ])->names([ // Specify custom names because default names collied with existing routes
+    ])->names([ // Specify custom names because default names collied with existing routes.
         'show' => 'api.managers.show',
         'update' => 'api.managers.update'
     ]);
 
-    // User must be logged in to user currentuser routes
-    Route::get('currentuser/manager', 'Api\ManagerApiController@showAuthenticated')
+    // User must be logged in to user currentuser routes.
+    Route::get('currentuser/manager', 'Api\ManagerController@showAuthenticated')
         ->middleware('auth');
 });
