@@ -17,7 +17,7 @@ class UpdatingTextArea extends Component<
   UpdatingTextAreaProps,
   UpdatingTextAreaState
 > {
-  public constructor(props) {
+  public constructor(props: UpdatingTextAreaProps) {
     super(props);
 
     const { updateDelay } = this.props;

@@ -202,8 +202,11 @@ class ReviewApplicationsRoot extends React.Component<
 
   public render(): React.ReactElement {
     const { applications, savingStatuses } = this.state;
-    const { reviewStatuses, job } = this.props;
-    const { intl } = this.props;
+    const { reviewStatuses, job, intl } = this.props;
+    const { locale } = intl;
+    if (locale !== "en" && locale !== "fr") {
+      throw new Error("Unknown intl.locale");
+    }
 
     const reviewStatusOptions = reviewStatuses.map(status => ({
       value: status.id,
@@ -212,7 +215,7 @@ class ReviewApplicationsRoot extends React.Component<
 
     return (
       <ReviewApplications
-        title={job.title[intl.locale]}
+        title={job.title[locale] || ""}
         classification={classificationString(job)}
         closeDateTime={job.close_date_time}
         applications={applications}
@@ -243,10 +246,11 @@ if (document.getElementById("review-applications-container")) {
     const reviewStatuses = JSON.parse(
       container.getAttribute("data-review-statuses") as string,
     );
-    const language = container.getAttribute("data-locale") as string;
+    const locale = container.getAttribute("data-locale") as string;
+    const safeLocale = locale === "en" || locale === "fr" ? locale : "en";
     const IntlReviewApplicationsRoot = injectIntl(ReviewApplicationsRoot);
     ReactDOM.render(
-      <IntlContainer locale={language}>
+      <IntlContainer locale={safeLocale}>
         <IntlReviewApplicationsRoot
           job={job}
           initApplications={applications}

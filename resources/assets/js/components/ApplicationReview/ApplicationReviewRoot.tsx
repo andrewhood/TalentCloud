@@ -161,10 +161,11 @@ if (document.getElementById("application-review-container")) {
     const reviewStatuses = JSON.parse(
       container.getAttribute("data-review-statuses") as string,
     );
-    const language = container.getAttribute("data-locale") as string;
+    const locale = container.getAttribute("data-locale") as string;
+    const safeLocale = locale === "en" || locale === "fr" ? locale : "en";
     const IntlApplicationReviewRoot = injectIntl(ApplicationReviewRoot);
     ReactDOM.render(
-      <IntlContainer locale={language}>
+      <IntlContainer locale={safeLocale}>
         <IntlApplicationReviewRoot
           initApplication={applications}
           reviewStatuses={reviewStatuses}

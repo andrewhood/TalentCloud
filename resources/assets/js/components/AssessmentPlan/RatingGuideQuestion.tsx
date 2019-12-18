@@ -124,7 +124,14 @@ const mapStateToProps = (
     : ratingGuideQuestionIsUpdating(state, ownProps.ratingGuideQuestionId),
 });
 
-const mapDispatchToProps = (dispatch: DispatchType, ownProps): any => ({
+const mapDispatchToProps = (
+  dispatch: DispatchType,
+  ownProps: RatingGuideQuestionContainerProps,
+): {
+  editQuestion: (newQuestion: RatingGuideQuestionModel) => void;
+  removeQuestion: (id: number) => void;
+  updateQuestion: (question: RatingGuideQuestionModel) => void;
+} => ({
   editQuestion: ownProps.temp
     ? (ratingGuideQuestion: RatingGuideQuestionModel): void => {
         dispatch(editTempRatingGuideQuestion(ratingGuideQuestion));

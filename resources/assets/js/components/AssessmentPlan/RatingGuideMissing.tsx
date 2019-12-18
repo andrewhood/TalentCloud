@@ -25,6 +25,10 @@ export const RatingGuideMissing: React.FunctionComponent<RatingGuideMissingProps
   criteriaToSkills,
   intl,
 }): React.ReactElement | null => {
+  const { locale } = intl;
+  if (locale !== "en" && locale !== "fr") {
+    throw new Error("Unknown intl.locale");
+  }
   const getSkillsForCriteria: (criteria: Criteria[]) => Skill[] = (
     criteria,
   ): Skill[] =>
@@ -52,10 +56,10 @@ export const RatingGuideMissing: React.FunctionComponent<RatingGuideMissingProps
     return null;
   }
   const essentialSkillNames = missingEssentialSkills.map(
-    (skill: Skill): string => skill.name[intl.locale],
+    (skill: Skill): string => skill.name[locale],
   );
   const assetSkillNames = missingAssetSkills.map(
-    (skill: Skill): string => skill.name[intl.locale],
+    (skill: Skill): string => skill.name[locale],
   );
 
   return (

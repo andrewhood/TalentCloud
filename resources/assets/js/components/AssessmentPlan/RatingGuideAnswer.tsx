@@ -102,6 +102,10 @@ const RatingGuideAnswer: React.FunctionComponent<RatingGuideAnswerProps &
   if (answer === null) {
     return null;
   }
+  const { locale } = intl;
+  if (locale !== "en" && locale !== "fr") {
+    throw new Error("Unknown intl.locale");
+  }
   const availableCriteria = getAvailableCriteria(
     unansweredCriteria,
     answerCriterion,
@@ -116,7 +120,7 @@ const RatingGuideAnswer: React.FunctionComponent<RatingGuideAnswerProps &
         : null;
       return {
         value: criterion.id,
-        label: skill ? skill.name[intl.locale] : "",
+        label: skill ? skill.name[locale] : "",
       };
     },
   );
@@ -230,7 +234,15 @@ const mapStateToProps = (
   };
 };
 
-const mapDispatchToProps = (dispatch: DispatchType, ownProps): any => ({
+const mapDispatchToProps = (
+  dispatch: DispatchType,
+  ownProps: RatingGuideAnswerContainerProps,
+): {
+  editAnswer: (newAnswer: RatingGuideAnswerModel) => void;
+  updateAnswer: (updatedAnswer: RatingGuideAnswerModel) => void;
+  deleteAnswer: (id: number) => void;
+  editTempAnswer: (ratingGuideAnswer: RatingGuideAnswerModel) => void;
+} => ({
   editAnswer: ownProps.temp
     ? (ratingGuideAnswer: RatingGuideAnswerModel): void => {
         dispatch(editTempRatingGuideAnswer(ratingGuideAnswer));

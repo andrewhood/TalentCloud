@@ -15,7 +15,7 @@ const ScrollToTop: React.FunctionComponent<ScrollToTopProps> = ({
 }): React.ReactElement => {
   const [prevPathname, setPrevPathName] = useState("");
 
-  const setScrollBehaviour = (scrollBehavior): void => {
+  const setScrollBehaviour = (scrollBehavior: "auto" | "smooth"): void => {
     const body: HTMLElement | null = document.querySelector("html");
     if (body) {
       body.style.scrollBehavior = scrollBehavior;

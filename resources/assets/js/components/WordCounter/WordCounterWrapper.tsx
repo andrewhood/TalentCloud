@@ -32,7 +32,7 @@ const WordCounterWrapper: React.FunctionComponent<WordCounterWrapperProps> = ({
 
     setCurrentNumberOfWords(countNumberOfWords(element.value));
 
-    const handleInputChange = (e): void => {
+    const handleInputChange = (e: Event): void => {
       const target = e.target as HTMLTextAreaElement;
       const numOfWords = countNumberOfWords(target.value);
       setCurrentNumberOfWords(numOfWords);

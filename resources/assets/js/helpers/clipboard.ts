@@ -1,4 +1,4 @@
-export async function copyToClipboard(event, text: string): Promise<void> {
+export async function copyToClipboard(event: any, text: string): Promise<void> {
   if (event.clipboardData && event.clipboardData.setData) {
     // IE specific code path to prevent textarea being shown while dialog is visible.
     return event.clipboardData.setData("Text", text);
@@ -32,13 +32,15 @@ export function copyElementContents(el: Element): void {
   if (document.createRange && window.getSelection) {
     range = document.createRange();
     sel = window.getSelection();
-    sel.removeAllRanges();
-    try {
-      range.selectNodeContents(el);
-      sel.addRange(range);
-    } catch (e) {
-      range.selectNode(el);
-      sel.addRange(range);
+    if (sel) {
+      sel.removeAllRanges();
+      try {
+        range.selectNodeContents(el);
+        sel.addRange(range);
+      } catch (e) {
+        range.selectNode(el);
+        sel.addRange(range);
+      }
     }
     // createTextRange is IE only
   } else if (documentIEBody.createTextRange) {

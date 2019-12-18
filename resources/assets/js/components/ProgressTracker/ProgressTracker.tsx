@@ -13,7 +13,7 @@ export interface ProgressTrackerProps {
   dataIsLoading?: boolean;
 }
 
-const isActiveItem = ({ state }): boolean => {
+const isActiveItem = ({ state }: ProgressTrackerItem): boolean => {
   return state === "active";
 };
 

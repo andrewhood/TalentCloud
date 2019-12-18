@@ -12,7 +12,7 @@ export interface UpdatingInputState {
 }
 
 class UpdatingInput extends Component<UpdatingInputProps, UpdatingInputState> {
-  public constructor(props) {
+  public constructor(props: UpdatingInputProps) {
     super(props);
 
     const { updateDelay } = this.props;

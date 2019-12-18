@@ -21,9 +21,14 @@ const AssessmentPlan: React.FunctionComponent<AssessmentPlanProps &
   notifications,
   intl,
 }): React.ReactElement => {
+  const { locale } = intl;
+  if (locale !== "en" && locale !== "fr") {
+    throw new Error("Unknown intl.locale");
+  }
+
   const jobTitle = (
     <span data-c-colour="c5" data-c-font-size="h3">
-      {job && ` ${job.title[intl.locale]}`}
+      {job && ` ${job.title[locale]}`}
     </span>
   );
   return (

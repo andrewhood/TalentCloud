@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, MouseEvent } from "react";
 import {
   injectIntl,
   WrappedComponentProps,
@@ -156,7 +156,7 @@ const ReviewCategory: React.StatelessComponent<ReviewCategoryProps &
     return `${first_name} ${last_name} <${email}>`; // eslint-disable-line
   });
   const emailList = nameEmails.join(",");
-  const handleCopyClick = (event): void => {
+  const handleCopyClick = (event: MouseEvent<HTMLButtonElement>): void => {
     copyToClipboard(event, emailList).then(() => {
       setJustCopied(true);
       setTimeout(() => setJustCopied(false), 2000);

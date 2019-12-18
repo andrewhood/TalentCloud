@@ -11,9 +11,10 @@ export const RootContainer: React.FunctionComponent = ({
   children,
 }): React.ReactElement => {
   const locale = document.documentElement.lang;
+  const safeLocale = locale === "en" || locale === "fr" ? locale : "en";
   return (
     <Provider store={store}>
-      <IntlContainer locale={locale}>
+      <IntlContainer locale={safeLocale}>
         <>
           <ErrorToast />
           {children}

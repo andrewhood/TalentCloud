@@ -41,13 +41,17 @@ export const RatingGuideNarrativeAssessment: React.FunctionComponent<RatingGuide
   if (jobId === null) {
     return null;
   }
+  const { locale } = intl;
+  if (locale !== "en" && locale !== "fr") {
+    throw new Error("Unknown intl.locale");
+  }
   const getCriteriaSkillType = (criterionId: number): number => {
     const skill = criteriaToSkill[criterionId];
     return skill ? skill.skill_type_id : SkillTypeId.Hard; // return hard type by default
   };
   const getCriteriaSkillName = (criterionId: number): string => {
     const skill = criteriaToSkill[criterionId];
-    return skill ? skill.name[intl.locale] : "";
+    return skill ? skill.name[locale] : "";
   };
   return (
     <div>

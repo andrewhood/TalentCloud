@@ -81,7 +81,7 @@ export default function Modal({
 
   // Adds various key commands to the modal
   useEffect((): (() => void) => {
-    let keyListener;
+    let keyListener: (e: KeyboardEvent) => void | undefined;
     if (visible) {
       keyListener = (e: KeyboardEvent): void => {
         const listener = keyListenersMap.get(e.keyCode);
@@ -130,16 +130,16 @@ export default function Modal({
   return null;
 }
 
-Modal.Header = function ModalHeader(props): React.ReactElement {
+Modal.Header = function ModalHeader(props: any): React.ReactElement {
   return props.children;
 };
 
-Modal.Body = function ModalBody(props): React.ReactElement {
+Modal.Body = function ModalBody(props: any): React.ReactElement {
   const { children } = props;
   return <div data-c-border="bottom(thin, solid, black)">{children}</div>;
 };
 
-Modal.Footer = function ModalFooter(props): React.ReactElement {
+Modal.Footer = function ModalFooter(props: any): React.ReactElement {
   const { children } = props;
   return (
     <div data-c-padding="normal">
@@ -162,7 +162,7 @@ Modal.Footer = function ModalFooter(props): React.ReactElement {
   );
 };
 
-Modal.FooterConfirmBtn = function ConfirmBtn(props): React.ReactElement {
+Modal.FooterConfirmBtn = function ConfirmBtn(props: any): React.ReactElement {
   const { onModalConfirm } = useContext(modalContext);
   return (
     <div data-c-alignment="base(right)">
@@ -178,7 +178,7 @@ Modal.FooterConfirmBtn = function ConfirmBtn(props): React.ReactElement {
   );
 };
 
-Modal.FooterCancelBtn = function CancelBtn(props): React.ReactElement {
+Modal.FooterCancelBtn = function CancelBtn(props: any): React.ReactElement {
   const { onModalCancel } = useContext(modalContext);
   return (
     <div>
@@ -194,7 +194,7 @@ Modal.FooterCancelBtn = function CancelBtn(props): React.ReactElement {
   );
 };
 
-Modal.FooterMiddleBtn = function MiddleBtn(props): React.ReactElement {
+Modal.FooterMiddleBtn = function MiddleBtn(props: any): React.ReactElement {
   const { onModalMiddle } = useContext(modalContext);
   return (
     <div data-c-alignment="base(center)">

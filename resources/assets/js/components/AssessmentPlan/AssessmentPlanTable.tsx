@@ -29,7 +29,7 @@ const renderAssessmentTypeBlock = (
   assessmentTypeName: string,
   criteria: Criteria[],
   skills: Skill[],
-  locale: string,
+  locale: "en" | "fr",
 ): React.ReactElement => {
   const essentialSkills: Skill[] = criteria
     .filter(
@@ -144,7 +144,10 @@ const AssessmentPlanTable: React.FunctionComponent<AssessmentPlanTableProps &
   intl,
 }: AssessmentPlanTableProps & WrappedComponentProps): React.ReactElement => {
   const uniqueAssessmentTypes: number[] = getUniqueAssessmentTypes(assessments);
-
+  const { locale } = intl;
+  if (locale !== "en" && locale !== "fr") {
+    throw new Error("Unknown intl.locale");
+  }
   return (
     <>
       <h3
@@ -234,7 +237,7 @@ const AssessmentPlanTable: React.FunctionComponent<AssessmentPlanTableProps &
               intl.formatMessage(assessmentType(assessmentTypeId)),
               associatedCriteria,
               skills,
-              intl.locale,
+              locale,
             );
           },
         )}

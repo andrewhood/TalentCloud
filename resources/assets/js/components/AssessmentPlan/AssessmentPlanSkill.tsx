@@ -91,6 +91,10 @@ export const AssessmentPlanSkill: React.FunctionComponent<AssessmentPlanSkillPro
   intl,
 }: AssessmentPlanSkillProps &
   WrappedComponentProps): React.ReactElement | null => {
+  const { locale } = intl;
+  if (locale !== "en" && locale !== "fr") {
+    throw new Error("Unknown intl.locale");
+  }
   useEffect((): void => {
     if (criterion === null || skill === null) {
       return;
@@ -136,9 +140,9 @@ export const AssessmentPlanSkill: React.FunctionComponent<AssessmentPlanSkillPro
   const skillLevelDescription = intl.formatMessage(
     SkillLevelDescriptionMessage(criterion.skill_level_id, skill.skill_type_id),
   );
-  const skillDescription = criterion.description[intl.locale]
-    ? criterion.description[intl.locale]
-    : skill.description[intl.locale];
+  const skillDescription = criterion.description[locale]
+    ? criterion.description[locale]
+    : skill.description[locale];
   const assessmentTypeOptions = enumToIds(AssessmentTypeId).map(
     (typeId): SelectOption => {
       return {
@@ -230,7 +234,7 @@ export const AssessmentPlanSkill: React.FunctionComponent<AssessmentPlanSkillPro
               defaultMessage="{skillName} - {skillLevel}"
               description="Title of a skill section in the Assessment Plan Builder."
               values={{
-                skillName: skill.name[intl.locale],
+                skillName: skill.name[locale],
                 skillLevel,
               }}
             />

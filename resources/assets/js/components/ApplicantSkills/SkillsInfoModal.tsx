@@ -88,8 +88,8 @@ const SkillsInfoModal: React.FunctionComponent<SkillsInfoModalProps> = ({
 
 if (document.querySelectorAll("div[data-skills-info-modal]")) {
   const elements = document.querySelectorAll("div[data-skills-info-modal]");
-
-  Array.prototype.slice.call(elements).forEach((container):
+  const elementArray: Element[] = Array.prototype.slice.call(elements);
+  elementArray.forEach((container):
     | void
     | React.Component<any, any, any>
     | Element => {

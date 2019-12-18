@@ -44,7 +44,7 @@ export const clipboardData = (
   skills: Skill[],
   ratingGuideQuestions: RatingGuideQuestion[],
   ratingGuideAnswers: RatingGuideAnswer[],
-  locale: string,
+  locale: "en" | "fr",
   formatMessage: (message: MessageDescriptor) => string,
   narrativeReview?: Assessment[],
 ): ClipboardTableRowProps[] => {
@@ -258,6 +258,10 @@ const RatingGuideClipboard: React.FunctionComponent<TableProps &
   intl,
   narrativeReview,
 }): React.ReactElement => {
+  const { locale } = intl;
+  if (locale !== "en" && locale !== "fr") {
+    throw new Error("Unknown intl.locale");
+  }
   const rows = cloneAndCleanTableRowProps(
     clipboardData(
       assessments,
@@ -265,7 +269,7 @@ const RatingGuideClipboard: React.FunctionComponent<TableProps &
       skills,
       ratingGuideQuestions,
       ratingGuideAnswers,
-      intl.locale,
+      locale,
       intl.formatMessage,
       narrativeReview,
     ),

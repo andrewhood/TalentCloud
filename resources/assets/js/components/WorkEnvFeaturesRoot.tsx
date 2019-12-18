@@ -21,8 +21,9 @@ if (document.getElementById("work-env-features-section")) {
     const selectedEnvOptions = extractSelectedEnvOptions(workEnvOptions);
     const teamSize = JSON.parse(container.dataset.teamSize as string);
     const locale = document.documentElement.lang;
+    const safeLocale = locale === "en" || locale === "fr" ? locale : "en";
     ReactDOM.render(
-      <IntlContainer locale={locale}>
+      <IntlContainer locale={safeLocale}>
         <JobWorkEnv
           teamSize={teamSize}
           selectedEnvOptions={selectedEnvOptions}

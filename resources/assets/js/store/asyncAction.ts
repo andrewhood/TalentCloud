@@ -53,7 +53,7 @@ interface StartedActionCreator<T extends string, M> {
 /** Internal definition, that doesn't quite represent final dispatched actions */
 interface SucceededActionCreator<T extends string, P, M> {
   type: T;
-  payload: (action, state, res) => PromiseLike<P>;
+  payload: (action: any, state: any, res: any) => PromiseLike<P>;
   meta: M;
 }
 
@@ -90,7 +90,7 @@ const csrfToken: string =
     ? (csrfElement.getAttribute("content") as string)
     : "";
 
-function jsonDateReplacer(key, value): string | any {
+function jsonDateReplacer(key: string, value: any): string | any {
   if (this[key] instanceof Date) {
     return dayjs(value).format("YYYY-MM-DDTHH:mm:ssZ");
   }

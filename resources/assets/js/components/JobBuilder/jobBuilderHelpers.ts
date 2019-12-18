@@ -49,7 +49,7 @@ export const jobBuilderIntroProgressState = (
 
 const jobDetailsValues = (
   job: Job,
-  locale: string,
+  locale: "en" | "fr",
 ): (string | number | null | boolean)[] => [
   job.term_qty,
   job.classification_id,
@@ -66,14 +66,14 @@ const jobDetailsValues = (
 
 export const isJobBuilderDetailsComplete = (
   job: Job,
-  locale: string,
+  locale: "en" | "fr",
 ): boolean => {
   return jobDetailsValues(job, locale).every(isFilled);
 };
 
 export const isJobBuilderDetailsUntouched = (
   job: Job,
-  locale: string,
+  locale: "en" | "fr",
 ): boolean => {
   const nullableValues = jobDetailsValues(job, locale).filter(
     (item): boolean => typeof item !== "boolean",
@@ -89,7 +89,7 @@ export const isJobBuilderDetailsUntouched = (
  */
 export const jobBuilderDetailsProgressState = (
   job: Job | null,
-  locale: string,
+  locale: "en" | "fr",
   allowUntouched = false,
 ): ProgressTrackerState => {
   if (
@@ -101,7 +101,7 @@ export const jobBuilderDetailsProgressState = (
   return job && isJobBuilderDetailsComplete(job, locale) ? "complete" : "error";
 };
 
-const jobEnvValues = (job: Job, locale: string): (string | number | null)[] => [
+const jobEnvValues = (job: Job, locale: "en" | "fr"): any[] => [
   job.team_size,
   job.fast_vs_steady,
   job.horizontal_vs_vertical,
@@ -113,16 +113,16 @@ const jobEnvValues = (job: Job, locale: string): (string | number | null)[] => [
 ];
 const jobEnvValuesOptional = (
   job: Job,
-  locale: string,
+  locale: "en" | "fr",
 ): (string | number | null)[] => [
   job.work_env_description[locale],
   job.culture_special[locale],
 ];
 
-const isJobBuilderEnvComplete = (job: Job, locale: string): boolean => {
+const isJobBuilderEnvComplete = (job: Job, locale: "en" | "fr"): boolean => {
   return jobEnvValues(job, locale).every(isFilled);
 };
-const isJobBuilderEnvUntouched = (job: Job, locale: string): boolean => {
+const isJobBuilderEnvUntouched = (job: Job, locale: "en" | "fr"): boolean => {
   const allJobValues = [
     ...jobEnvValues(job, locale),
     ...jobEnvValuesOptional(job, locale),
@@ -134,7 +134,7 @@ const isJobBuilderEnvUntouched = (job: Job, locale: string): boolean => {
 };
 export const jobBuilderEnvProgressState = (
   job: Job | null,
-  locale: string,
+  locale: "en" | "fr",
   allowUntouched = false,
 ): ProgressTrackerState => {
   if (

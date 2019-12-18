@@ -68,7 +68,7 @@ export const DemoSubmitJobModal: React.FC<DemoSubmitJobModalProps> = ({
                 defaultMessage="To find out if you can access these features, <a>click here</a>."
                 description="Explanation of where to find more information."
                 values={{
-                  a: msg => (
+                  a: (msg: any) => (
                     <a
                       href={managerFaq(intl.locale, "manager-who")}
                       title={intl.formatMessage(messages.linkTitle)}

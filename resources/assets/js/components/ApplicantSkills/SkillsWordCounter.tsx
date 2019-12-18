@@ -100,8 +100,6 @@ const updateWordCounters = (): void => {
   if (document.querySelectorAll("div[data-word-counter-id]")) {
     const wordCounters = document.querySelectorAll("div[data-word-counter-id]");
 
-    console.dir(wordCounters);
-
     wordCounters.forEach((wordCounter): void => {
       if (
         wordCounter !== null &&
@@ -117,8 +115,9 @@ const updateWordCounters = (): void => {
 
         const SkillsWordCounterIntl = injectIntl(SkillsWordCounter);
         const locale = document.documentElement.lang;
+        const safeLocale = locale === "en" || locale === "fr" ? locale : "en";
         ReactDOM.render(
-          <IntlContainer locale={locale}>
+          <IntlContainer locale={safeLocale}>
             <SkillsWordCounterIntl elementId={elementId} />
           </IntlContainer>,
           wordCounter,
